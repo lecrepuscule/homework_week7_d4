@@ -17,12 +17,14 @@ app.use(bodyParser.json());
 
 // pre-seeded food data
 var foods =[
-  {id: 0, name: "Sushiritto", yumminess: "quite"},
-  {id: 1, name: "Green Eggs & Ham", yumminess: "sure"},
-  {id: 2, name: "Crayfish", yumminess: "depending"},
-  {id: 3, name: "Foie Gras", yumminess: "omg"},
-  {id: 4, name: "Kale", yumminess: "meh"}
+  {id: 1, name: "Sushiritto", yumminess: "quite"},
+  {id: 2, name: "Green Eggs & Ham", yumminess: "sure"},
+  {id: 3, name: "Crayfish", yumminess: "depending"},
+  {id: 4, name: "Foie Gras", yumminess: "omg"},
+  {id: 5, name: "Kale", yumminess: "meh"}
 ]
+
+var id = 5;
 
 // middleware logging
 app.use(function(req, res, next){
@@ -46,9 +48,10 @@ app.get("/foods", function (req, res) {
 })
 
 app.post("/foods", function (req, res) {
-  // add a unique id
-  // add new food to DB (array, really...)
-  // send a response with newly created object
+  id++;
+  req.body.id = id;
+  foods.push(req.body);
+  res.json(foods[foods.length-1]);
 })
 
 app.delete("/foods/:id", function (req, res) {
