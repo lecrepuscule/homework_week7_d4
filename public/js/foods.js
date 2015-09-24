@@ -20,6 +20,6 @@ function getIndex(){
 
 function appendFoods(foods){
   $.each(foods, function(index, food){
-    $("<li class='food' data-id=" + food.id + "><a href='#'>" + food.name + "</a></li>").appendTo(".foods");
+    $("<li class='food' data-id=" + food.id + "><a href='#'>" + food.name + "</a></li>").appendTo("#foods");
   })
 }
