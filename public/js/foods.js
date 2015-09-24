@@ -31,6 +31,6 @@ function createFood(e){
 
 function appendFoods(foods){
   $.each(foods, function(index, food){
-    $("<li class='food' data-id=" + food.id + "><a href='#'>" + food.name + "</a></li>").appendTo("#foods");
+    $("<tr class='food' id='" + food.id + "'><td data-id=" + food.id + ">" + food.name + "</td><td>" + food.yumminess + "</td><td><button class='delete-food'>Delete</button></td></tr>").appendTo("#foods");
   })
 }
