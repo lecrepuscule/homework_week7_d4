@@ -3,6 +3,8 @@ $(document).on("ready", function(){
 
   getIndex();
 
+  $("#new-food-submit").on("click", createFood)
+
 })
 
 function request(url, method, data){
@@ -16,6 +18,15 @@ function request(url, method, data){
 
 function getIndex(){
   request("/foods", "get").done(appendFoods);
+}
+
+function createFood(e){
+  e.preventDefault();
+  var data = {
+    name: $("#food-name").val(),
+    yumminess: $("#food-yumminess").val()
+  }
+  request("/foods", "post", data).done(appendFoods);
 }
 
 function appendFoods(foods){

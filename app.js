@@ -53,7 +53,7 @@ foodRouter.post("/", function (req, res) {
   id++;
   req.body.id = id;
   foods.push(req.body);
-  res.json(foods[foods.length-1]);
+  res.json([foods[foods.length-1]]);
 })
 
 foodRouter.delete("/:id", function (req, res) {
