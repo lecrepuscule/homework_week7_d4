@@ -1,1 +1,4 @@
-console.log("testing");
+$(document).on("ready", function(){
+  console.log("testing");
+
+})
