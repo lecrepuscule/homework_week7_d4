@@ -4,13 +4,15 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 
+var foodRouter = express.Router();
+
 // CONFIG //
 
 // serve js & css files into a public folder
 app.use(express.static(__dirname + '/public'));
 
 // body parser config
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DATA //
@@ -29,12 +31,12 @@ var id = 5;
 // middleware logging
 app.use(function(req, res, next){
   console.log("%s request to %s from %s", req.method, req.url, req.ip);
+  console.log(req.body); 
+  console.log(req.params);
   next();
 })
 
 // ROUTES //
-var foodRouter = express.Router();
-app.use("/foods", foodRouter);
 
 // root path
 app.get("/", function (req, res) {
@@ -43,24 +45,30 @@ app.get("/", function (req, res) {
 })
 
 // foods index path
-app.get("/foods", function (req, res) {
+foodRouter.get("/", function (req, res) {
   res.json(foods);
 })
 
-app.post("/foods", function (req, res) {
+foodRouter.post("/", function (req, res) {
   id++;
   req.body.id = id;
   foods.push(req.body);
   res.json(foods[foods.length-1]);
 })
 
-app.delete("/foods/:id", function (req, res) {
+foodRouter.delete("/:id", function (req, res) {
   console.log("hitting delete route");
-  // finding an object with id = req.body.id out of the foods
-  // remove item from array
-  // render deleted object
+  for (var i=0; i<foods.length; i++) {
+    if (foods[i].id === Number(req.params.id)) {
+      removedFood = foods.splice(i,1);
+      break;
+    }
+  }
+  console.log(removedFood+ "has been removed");
+  res.json(removedFood);
 })
 
+app.use("/foods", foodRouter);
 // listen on port 3000
 app.listen(3000, function (){
   console.log("listening on port 3000");
