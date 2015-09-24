@@ -24,6 +24,12 @@ var foods =[
   {id: 4, name: "Kale", yumminess: "meh"}
 ]
 
+// middleware logging
+app.use(function(req, res, next){
+  console.log("%s request to %s from %s", req.method, req.url, req.ip);
+  next();
+})
+
 // ROUTES //
 var foodRouter = express.Router();
 app.use("/foods", foodRouter);
@@ -36,7 +42,7 @@ app.get("/", function (req, res) {
 
 // foods index path
 app.get("/foods", function (req, res) {
-  // render foods index as JSON
+  res.json(foods);
 })
 
 app.post("/foods", function (req, res) {
